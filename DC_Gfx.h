@@ -97,13 +97,13 @@ public:
 		y = ToDC_Y(y);
 		int16_t x1, y1;
 		uint16_t w, h;
-		_display->getTextBounds(text, (int16_t)x, (int16_t)y, &x1, &y1, &w, &h);
+		_display->getTextBounds(text, 0, 0, &x1, &y1, &w, &h);
 		if (aligment == HorizontalAlignment::Right)
 			x = (x + width - w);
 		else if (aligment == HorizontalAlignment::Center)
 			x = (x + width / 2 - w / 2);
 		_display->setTextColor(_color);
-		_display->setCursor(x, y);
+		_display->setCursor(x - x1, y - y1);
 		_display->println(text);
 	}
 #endif
@@ -114,16 +114,13 @@ public:
 		y = ToDC_Y(y);
 		int16_t x1, y1;
 		uint16_t w, h;
-		_display->getTextBounds((char *)text, (int16_t)x, (int16_t)y, &x1, &y1, &w, &h);
+		_display->getTextBounds((char *)text, 0, 0, &x1, &y1, &w, &h);
 		if (aligment == HorizontalAlignment::Right)
 			x = (x + width - w);
 		else if (aligment == HorizontalAlignment::Center)
 			x = (x + width / 2 - w / 2);
 		_display->setTextColor(_color);
-		if(GetCurrentFont() != NULL && GetCurrentFont()->BaselinePosition == AFont::BaselineBottom)
-			_display->setCursor(x, y + h);
-		else
-			_display->setCursor(x, y);
+		_display->setCursor(x - x1, y - y1);
 		_display->print(text); 
 	}
 
